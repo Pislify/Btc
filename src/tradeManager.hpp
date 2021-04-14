@@ -26,7 +26,7 @@ struct TradeManager
     int x_off = 0,y_off = 0;
 
     //font sise for the 
-    int fontS = 1;
+    int fontS = 10;
 
     //fetsh state
     bool fetched = false;
@@ -68,6 +68,7 @@ struct TradeManager
 
     void Init()
     {
+    
     }
 
     void CamUpdate()
@@ -153,9 +154,9 @@ struct TradeManager
           //DrawText(s.data(),i*widthIntencity,720+y_off-(data[i]+1 *heightIntencity) ,fontS,nColor);
 
           x = x_off + ( i * widthIntencity ) ;
-          y = GetScreenHeight() + y_off - ( data[i] * heightIntencity )/2 ;
+          y = GetScreenHeight() + y_off - ( data[i]/2 * heightIntencity )/2 ;
           x1 = x_off + (( i + 1 ) * widthIntencity);
-          y1 = GetScreenHeight() + y_off - ( data[i+1] * heightIntencity )/2 ;
+          y1 = GetScreenHeight() + y_off - ( data[i+1]/2 * heightIntencity )/2 ;
 
           DrawLine(x,y,x1,y1,drawColor);
 
