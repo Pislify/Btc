@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include <vector>
+#include <random>
 #include <string>
 #include <json/json.h>
 #include <iostream>
@@ -18,7 +19,7 @@ struct TradeManager
     vector<int> data;
     
     //multipliers for width and height
-    int  widthIntencity = 150;
+    int  widthIntencity = 300;
     int heightIntencity = 1;
 
     //offsets for the graph
@@ -26,6 +27,9 @@ struct TradeManager
 
     //font sise for the 
     int fontS = 1;
+
+    //fetsh state
+    bool fetched = false;
 
     //BASIC colors needs to be made into its class
     Color colorU = GREEN;
@@ -102,11 +106,10 @@ struct TradeManager
     void Update()
     {
         timer++;
-        if(timer>=120)
+        if(timer>=30)
         {
             DrawText("fetch" , 0,0,20 ,RED);
-            thread d(AddCoin,&data);
-            d.join();
+            data.push_back(data[data.size()] + rand()%10000);
             CamUpdate();
             DrawGraph();
             timer = 0;
@@ -150,13 +153,14 @@ struct TradeManager
           //DrawText(s.data(),i*widthIntencity,720+y_off-(data[i]+1 *heightIntencity) ,fontS,nColor);
 
           x = x_off + ( i * widthIntencity ) ;
-          y = GetScreenHeight() + y_off - ( data[i] * heightIntencity ) ;
+          y = GetScreenHeight() + y_off - ( data[i] * heightIntencity )/2 ;
           x1 = x_off + (( i + 1 ) * widthIntencity);
-          y1 = GetScreenHeight() + y_off - ( data[i+1] * heightIntencity ) ;
+          y1 = GetScreenHeight() + y_off - ( data[i+1] * heightIntencity )/2 ;
 
           DrawLine(x,y,x1,y1,drawColor);
 
           string s = to_string(data[i]);
+          s+= "$";
           if(i == data.size()-2){
             DrawText(s.data(),x,y ,fontS * cam.zoom,nColor);
           }
